@@ -1,0 +1,155 @@
+extends base
+
+block content 
+    
+    .overlay.hidden
+        .create-form-container
+            button.close-overlay &times
+            h2.form-heading Fill the fields to create a tour!
+            form.update-form.hidden
+                .form-first-column
+                    .form__group
+                        label.form__label(for='update-name') Tour Name:
+                        input.form__input.name-input#update-name(type='text', placeholder='example: The Sea Explorer...' name='name')
+                    .form__group
+                        label.form__label(for='update-duration') Duration:
+                        input.form__input#update-duration(type='number',min='1', placeholder='duration is in days...' name='duration')
+                    .form__group
+                        label.form__label(for='update-group-size') Max group size:
+                        input.form__input#update-group-size(type='number',min='1', placeholder='example: 15 people...' name='maxGroupSize')
+                    .form__group 
+                        label.form__label(for='update-difficulty') Select difficulty
+                        select.select-form.select-difficulty#update-difficulty(name='difficulty')
+                            option(value='easy' selected='selected') easy
+                            option(value='medium') medium 
+                            option(value='difficult') difficult
+                    .form__group
+                        label.form__label(for='update-price') Tour price: 
+                        input.form__input#update-price(type='number', min='1' placeholder='500$' name='price')
+                    .form__group
+                        label.form__label(for='update-summary') Summary: 
+                        input.form__input#update-summary(type='text', placeholder='Exciting adventure in the snow with snowboarding...' name='summary')
+                .form-second-column
+                    .form__group 
+                        label.form__label(for='update-description') Description:
+                        input.form__input#update-description(type='text', placeholder='Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offi…' name='description')
+                    .form__group 
+                        label.form__label(for='update-guides') Select guides
+                        select.select-form.select-guides#update-guides(multiple, name='guides')
+                            each user in users 
+                                option(value=`${user._id}`)= `${user.name}`
+                    .form__group
+                        label.form__label(for='update-startDate') Start Date
+                        input.form__input#update-startDate(type='date' name='startDates')
+                    .form__group
+                        label.form__label(for='update-Location') Location:
+                        select.select-country.select-form#update-Location(name='country')
+                            each country in countries 
+                                option(value=`${country}`)= `${country}`
+                    .form__group.form__photo-upload 
+                        input.form__upload#updateImageCover(type='file', accept='image/*' name='imageCover')
+                        label.form__label(for='updateImageCover') Cover Image
+                    .form__group.form__photo-upload
+                        input.form__upload#updateImages(type='file',  accept='image/*'  multiple='multiple' name='images')
+                        label.form__label(for='updateImages') Tour images 
+                button.btn.btn--green(type='submit') Update the tour!
+            form.create-form.hidden
+                .form-first-column
+                    .form__group
+                        label.form__label(for='tour-name') Tour Name:
+                        input.form__input.name-input#tour-name(type='text', placeholder='example: The Sea Explorer...' name='name' required value='Test tour23')
+                    .form__group
+                        label.form__label(for='tour-duration') Duration:
+                        input.form__input#tour-duration(type='number',min='1', placeholder='duration is in days...' name='duration' required value='5')
+                    .form__group
+                        label.form__label(for='tour-group-size') Max group size:
+                        input.form__input#tour-group-size(type='number',min='1', placeholder='example: 15 people...' name='maxGroupSize' required value='12')
+                    .form__group 
+                        label.form__label(for='tour-difficulty') Select difficulty
+                        select.select-difficulty.select-form#tour-difficulty(name='difficulty' required)
+                            option(value='easy' selected='selected') easy
+                            option(value='medium') medium 
+                            option(value='difficult') difficult
+                    .form__group
+                        label.form__label(for='tour-price') Tour price: 
+                        input.form__input#tour-price(type='number', min='1' placeholder='500$' name='price' required value='500')
+                    .form__group
+                        label.form__label(for='tour-summary') Summary: 
+                        input.form__input#tour-summary(type='text', placeholder='Exciting adventure in the snow with snowboarding...' name='summary' required value='Exciting tour for people that love exploring beautiful landscapes')
+                .form-second-column
+                    .form__group 
+                        label.form__label(for='tour-description') Description:
+                        input.form__input#tour-description(type='text', placeholder='Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offi…' name='description' required value='test description')
+                    .form__group 
+                        label.form__label(for='tour-guides') Select guides
+                        select.select-guides.select-form#tour-guides(multiple, name='guides' required)
+                            each user in users 
+                                option(value=`${user._id}`)= `${user.name}`
+                    .form__group
+                        label.form__label(for='tour-startDate') Start Date
+                        input.form__input#tour-startDate(type='date' name='startDates' value='2023-10-25' required)
+                    .form__group
+                        label.form__label(for='tour-Location') Location:
+                        select.select-country.select-form#tour-Location(name='startLocation' required)
+                            each country in countries 
+                                option(value=`${country}`)= `${country}`
+                    .form__group.form__photo-upload 
+                        input.form__upload#imageCover(type='file', accept='image/*' name='imageCover' required)
+                        label.form__label(for='imageCover') Cover Image
+                    .form__group.form__photo-upload
+                        input.form__upload#images(type='file',  accept='image/*'  multiple='multiple' name='images' required)
+                        label.form__label(for='images') Tour images 
+                button.btn.btn--green(type='submit') Create new tour!
+    main.main#tours-main
+        button.btn-create.btn--green(data-model='Tour') Create new Tour
+        .card-container
+
+            each tour in tours
+                .card
+                    .card__header
+                        .card__picture
+                            .card__picture-overlay &nbsp;
+                            img.card__picture-img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
+                        h3.heading-tertirary
+                            span= tour.name
+
+                    .card__details
+                        h4.card__sub-heading= `${tour.difficulty} ${tour.duration}-day to tour`
+                        p.card__text= tour.summary
+                        .card__data
+                            svg.card__icon
+                                use(xlink:href='/img/icons.svg#icon-map-pin')
+                            span= tour.startLocation.description || tour.country
+                        .card__data
+                            svg.card__icon
+                                use(xlink:href='/img/icons.svg#icon-calendar')
+                            span= tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
+                        .card__data
+                            svg.card__icon
+                                use(xlink:href='/img/icons.svg#icon-flag')
+                            span= `${tour.locations.length} stops`
+                        .card__data
+                            svg.card__icon
+                                use(xlink:href='/img/icons.svg#icon-user')
+                            span= `${tour.maxGroupSize} people`
+
+                    .card__footer
+                        p
+                            span.card__footer-value= `$${tour.price}`
+                            | 
+                            span.card__footer-text per person
+                        p.card__ratings
+                            span.card__footer-value= tour.ratingsAverage
+                            |  
+                            span.card__footer-text= `rating (${tour.ratingsQuantity})`
+                        a.btn.btn--green.btn--small(href=`/tours/${tour.slug}`) Details
+                        if user
+                            button.btn-heart(data-tour-id=`${tour.id}` class=`${user.favouriteTours.includes(tour.id) ? 'favourite' : ''}`)
+                                svg.card__icon
+                                    use(xlink:href='/img/icons.svg#icon-heart')
+                    button.btn-edit(data-id=`${tour.id}` data-model='tours')
+                        svg.card__icon 
+                            use(xlink:href='/img/icons.svg#icon-edit')
+                    button.btn-delete(data-id=`${tour.id}` data-model='tours')
+                        svg.card__icon 
+                            use(xlink:href='/img/icons.svg#icon-trash')

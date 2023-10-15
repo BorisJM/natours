@@ -1,0 +1,22 @@
+extends base
+include _myReviewCard
+
+block content
+    main.main 
+        .card-container
+            each review,i in reviews
+                - const tour = tours[i]
+                    +myReviewCard(review, tour)
+        .review-form#my-reviews-form.hidden
+                form.form.edit-review-form
+                    .form__group 
+                        label.form__label(for='details') Details
+                        input#review-details.form__input(type='text' placeholder='Change your review...', required)
+                    .form__group.rating
+                        each star, i in [1,2,3,4,5]
+                            input.form__input.input__rating(type='radio' name='rating' id=`rating-${i+1}` value=`${[1,2,3,4,5][4-i]}`) 
+                            label.form__label(for=`rating-${i+1}`)
+                                svg.reviews__star(class=`reviews__star--inactive`)
+                                    use(xlink:href='/img/icons.svg#icon-star')
+                    .form__group
+                        button.btn.btn--green#review-btn Change it!

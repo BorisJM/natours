@@ -1,0 +1,50 @@
+extends base
+
+block content
+    .overlay.hidden
+        .create-form-container.user-form-container
+            button.close-overlay &times
+            h2.form-heading Fill the fields to create a user!
+            form.create-user-form
+                .form-first-column
+                    .form__group
+                        label.form__label(for='user-name') name
+                        input.form__input#user-name(name='name' type='text' value='test user1234')
+                    .form__group.password-group
+                        label.form__label(for='user-password') password
+                        input.form__input#user-password(name='password' type='password' value='test1234')
+                        button.password-toggle(type='button')
+                            svg.card__icon
+                                use(xlink:href='/img/icons.svg#icon-eye')
+                    .form__group.password-group
+                        label.form__label(for='user-passwordConfirm') confirm
+                        input.form__input#user-passwordConfirm(name='passwordConfirm' placeholder='Password confirm...' type='password' value='test1234')
+                        button.password-toggle(type='button')
+                            svg.card__icon
+                                use(xlink:href='/img/icons.svg#icon-eye')
+                .form-second-column
+                    .form__group
+                        label.form__label(for='user-email') email 
+                        input.form__input#user-email(name='email' type='email' value='test12344321@gmail.com')
+                    .form__group
+                        label.form__label(for='user-role') role 
+                        select.select-form.select-role#user-role(name='role')
+                            each role in ['admin', 'user', 'guide', 'lead-guide']
+                                option(value=`${role}`)= `${role}`
+                button.btn.btn--green(type='submit') create a user!
+
+    main.main#users-main
+        button.btn-create.btn-create-user.btn--green(data-Model='User') Create new User
+        .user__container
+            each user in users
+                .user__card
+                    .user__avatar
+                        img.user__avatar-img(src=`/img/users/${user.photo}` alt=`${user.name}`)
+                        h6.user__name= `${user.name}`
+                    p.user__text= `${user.email}`
+                    button.btn-edit(data-id=`${user.id}` data-model='users')
+                            svg.card__icon 
+                                use(xlink:href='/img/icons.svg#icon-edit')
+                    button.btn-delete(data-id=`${user.id}` data-model='users')
+                            svg.card__icon 
+                                use(xlink:href='/img/icons.svg#icon-trash')
