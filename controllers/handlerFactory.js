@@ -19,7 +19,6 @@ exports.deleteOne = (Model) =>
 
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    console.log(req.body);
     const user =
       Model === User
         ? await Model.findById(req.params.id).select('+password')
@@ -54,7 +53,6 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    console.log(req.body);
     const doc = await Model.create(req.body);
 
     res.status(201).json({

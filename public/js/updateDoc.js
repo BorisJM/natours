@@ -4,7 +4,7 @@ import { showAlert } from './alerts';
 
 export const updateDoc = async (model, id, data) => {
   try {
-    const url = `http://127.0.0.1:8000/api/v1/${model}/${id}`;
+    const url = `/api/v1/${model}/${id}`;
     const res = await axios.patch(url, data, {
       headers: {
         'Content-Type':

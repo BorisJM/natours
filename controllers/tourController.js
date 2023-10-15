@@ -59,7 +59,6 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
 });
 
 exports.resizeUpdateTourImages = catchAsync(async (req, res, next) => {
-  console.log(req.files);
   if (!req.files) return next();
   // 1) Cover image
   if (req.files.imageCover) {

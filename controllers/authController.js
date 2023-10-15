@@ -72,7 +72,6 @@ exports.verification = catchAsync(async (req, res, next) => {
     { uniqueString: string },
     { isValid: true },
   );
-  console.log(user);
   if (!user || user.isValid)
     return next(new AppError('Link is expired or dont exist!'));
 

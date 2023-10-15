@@ -4,7 +4,7 @@ import { showAlert } from './alerts';
 
 export const createUser = async (data) => {
   try {
-    const res = await axios.post('http://127.0.0.1:8000/api/v1/users', data, {
+    const res = await axios.post('/api/v1/users', data, {
       headers: { 'Content-Type': 'application/json' },
     });
     if (res.data.status === 'success') {
@@ -15,6 +15,5 @@ export const createUser = async (data) => {
     }
   } catch (err) {
     showAlert('error', err.response?.data?.message);
-    console.log(err);
   }
 };
